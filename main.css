@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&amp;family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&amp;display=swap');
+body {
+    transition: all 1s;
+    background-color: rgb(33, 33, 33);
+    color: #fff;
+}
+
+option {
+    color: #fff;
+    background-color: #2b2b2b;
+}
+
+.courier-prime {
+    font-family: "Courier Prime", sans-serif;
+}
+
+.nunito-sans {
+    font-family: "Nunito Sans", sans-serif;
+}
+
+.w-10 {
+    width: 10%
+}
+
+.w-90 {
+    width: 90%
+}
+
+.nunito-sans-bold {
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 800;
+}
+
+.blink {
+    animation: blinker 2s linear infinite;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.h-30 {
+    height: 30vh;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.object-fit-scale-down {
+    object-fit: scale-down;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.onhover-pointer:hover {
+    cursor: pointer;
+}
+
+#systemsList div.system-card:hover,
+#systemsList div.bg-dark.system-card:hover {
+    border: 1px solid rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+#systemsList div.bg-dark.system-card {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+#systemReportCard:hover,
+#systemReportCard.bg-dark:hover {
+    border: 1px solid rgb(255, 0, 0);
+}
+
+#systemReportCard.bg-dark {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+#systemsList,
+#settingsPanel,
+#systemReport {
+    max-height: 90vh;
+    overflow-y: auto;
+    min-height: 90vh;
+}
+
+#settingsPanel,
+#systemReport {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#settingsPanel::-webkit-scrollbar,
+#systemReport::-webkit-scrollbar {
+    display: none;
+}
+
+.CodeMirror {
+    min-height: 60vh;
+    overflow-y: scroll;
+    max-height: 60vh;
+}
+
+.navbar-icon {
+    font-size: 1.25rem;
+}
+
+.navbar-padding-top {
+    padding-top: 0.66rem;
+}
+
+.analysis-col::-webkit-scrollbar {
+    display: none;
+}
+
+.analysis-col {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.ship-image {
+    filter: invert();
+}
+
+@font-face {
+    font-family: 'SBGlyphs';
+    src: url('https://starblast.data.neuronality.com/fonts/starblast-glyphs.ttf?v=1');
+    font-weight: normal;
+    font-style: normal
+}

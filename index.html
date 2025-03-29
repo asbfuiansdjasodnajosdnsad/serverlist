@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julia's ServerList</title>
+    <meta name="description" content="Julia's ServerList - Discover and share custom game servers for Starblast.io. Browse various game modes, regions, and join the best servers with ease.">
+    <meta content="Julia's ServerList" property="og:title">
+    <meta content="https://julia1231231.github.io" property="og:site_name">
+    <meta content="./img/favicon.png" property="og:image">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.png">
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="./main.css">
+    <style id="customThemeStyle"></style>
+    <script src="./other.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" onload="this.onload=null;this.rel='stylesheet'">
+    <script src="./codemirror.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <link rel="stylesheet" as="style" href="./codemirror.min.css" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.64.0/theme/darcula.min.css">
+    <script src="./codemirror.mode.css.min.js"></script>
+</head>
+
+<body>
+    <div class="modal" tabindex="-1" id="customThemeModal" style="overflow: hidden;" data-nosnippet="">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content w-100">
+                <div class="modal-header">
+                    <h5 class="modal-title">Custom Theme</h5>
+                    <button type="button" class="btn-close" id="themeModalCloseButton" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body border-0">
+                    <label for="themeEditor" style="display: none"></label>
+                    <textarea id="themeEditor" style="display: none;"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" id="shareGameModal" data-nosnippet="" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content w-100">
+                <div class="modal-header">
+                    <h5 class="modal-title">Share Custom Game</h5>
+                    <button type="button" class="btn-close" id="shareGameModalCloseButton" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="customGameLinkInput" class="visually-hidden">Share Custom Game URL</label>
+                    <div class="input-group">
+                        <input type="text" id="customGameLinkInput" class="form-control-input" autocomplete="off" autocapitalize="off" placeholder="https://starblast.io/#1234@123.123.123.123">
+                        <button class="btn btn-danger" id="shareCustomGame"><i class="bi bi-arrow-bar-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container" data-nosnippet="">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">
+                    <b>Julia's ServerList</b>
+                </a>
+                <button class="navbar-toggler" type="button" id="navbar-button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item ms-auto">
+                            <a class="nav-link onhover-pointer navbar-icon" href="https://discord.gg/ban7jN3tvS">
+                                LⓄV☆ <i class="bi bi-discord"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-2 mt-0" id="settingsPanel">
+                <!-- Region Selection -->
+                <h5 class="nunito-sans-bold">Region: </h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="region" id="America" checked="">
+                    <label class="form-check-label" for="America">America</label> <i id="countAmerica"><i class="bi bi-person-fill"></i> Loading...</i>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="region" id="Europe">
+                    <label class="form-check-label" for="Europe">Europe</label> <i id="countEurope"><i class="bi bi-person-fill"></i> Loading...</i>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="region" id="Asia">
+                    <label class="form-check-label" for="Asia">Asia</label> <i id="countAsia"><i class="bi bi-person-fill"></i> Loading...</i>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="region" id="World" style="display: none">
+                    <label class="form-check-label" for="World"><b>Total</b></label> <i id="countTotal"><i class="bi bi-person-fill"></i> Loading...</i>
+                </div>
+                <!-- Mode Selection -->
+                <h5 class="nunito-sans-bold">Mode:</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="teamMode">
+                    <label class="form-check-label" for="teamMode"><i class="bi bi-people-fill"></i> Team Mode</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="survivalMode">
+                    <label class="form-check-label" for="survivalMode"><i class="bi bi-bullseye"></i> Survival Mode</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="deathmatchMode">
+                    <label class="form-check-label" for="deathmatchMode"><i class="bi bi-trophy-fill"></i> Deathmatch</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="moddingMode">
+                    <label class="form-check-label" for="moddingMode"><i class="bi bi-code-slash"></i> Modding Space</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invasionMode">
+                    <label class="form-check-label" for="invasionMode"><i class="bi bi-border"></i> Invasion</label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" value="" id="customMode">
+                    <label class="form-check-label" for="customMode"><i class="bi bi-wrench"></i> Custom</label>
+                </div>
+                <button class="btn btn-sm btn-outline-danger w-100 mb-3" type="button" id="customGameShareButton" data-bs-toggle="modal" data-bs-target="#customGameModal">
+                    Share Custom Game
+                </button>
+                <!-- Notification Option -->
+                <h5 class="nunito-sans-bold">Options:</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="newServerAlert">
+                    <label class="form-check-label" for="newServerAlert"><i class="bi bi-bell-fill"></i> New Server Alert</label>
+                </div>
+                <h5 class="nunito-sans-bold">Select Theme:</h5>
+                <select id="themeSelect" class="form-select mb-3">
+                    <option value="Electric">Electric</option>
+                    <option value="Dark">Dark</option>
+                    <option value="1337">1337</option>
+                    <option value="Blue by Caramel#8789">Blue by Caramel#8789</option>
+                    <option value="Pink-Purple by Caramel#8789">Pink-Purple by Caramel#8789</option>
+                    <option value="Purple by Caramel#8789">Purple by Caramel#8789</option>
+                    <option value="Caramel by Caramel#8789">Caramel by Caramel#8789</option>
+                    <option value="Neon by Pix#7008">Neon by Pix#7008</option>
+                    <option value="Starblast by Bhpsngum#2623">Starblast by Bhpsngum#2623</option>
+                    <option value="Asu by apathy#3993">Asu by apathy#3993</option>
+                    <option value="Lotus by Evo">Lotus by Evo</option>
+                    <option value="Meteor by TheMardon#7986">Meteor by TheMardon#7986</option>
+                    <option value="Sunny by Halcyon#2789">Sunny by Halcyon#2789</option>
+                    <option value="Infrared by Halcyon#2789">Infrared by Halcyon#2789</option>
+                    <option value="Ultraviolet by Halcyon#2789">Ultraviolet by Halcyon#2789</option>
+                    <option value="Epilogue by apathy#3993">Epilogue by apathy#3993</option>
+                    <option value="Custom">Custom</option>
+                </select>
+                <button class="btn btn-sm btn-outline-success w-100" data-bs-toggle="modal" data-bs-target="#customThemeModal" id="customThemeShow">Custom Theme</button>
+            </div>
+            <div class="col-5" id="systemsList">
+                <div class="card system-card mb-3" id="systemCardTemplate" style="display: none;">
+                    <div class="card-body">
+                        <h3 class="nunito-sans-bold mb-0"><span class="system-name"></span> <span class="float-end system-age"></span></h3>
+                        <span><i class="bi bi-bullseye"></i> <i class="system-mode"></i> <b class="float-end system-players"></b></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5" id="systemReport" style="display: none;">
+                <div class="card system-card" id="systemReportCard">
+                    <div class="card-body">
+                        <h3 class="nunito-sans-bold text-center mb-0" id="systemReportSystemName">Trappist 1</h3>
+                        <p class="text-center">System Report</p>
+                        <span><b>Mode</b> <i class="float-end" id="systemReportMode"></i><br></span>
+                        <span><b>Region</b> <i class="float-end" id="systemReportRegion"></i><br></span>
+                        <span><b>Age</b> <i class="float-end" id="systemReportTime"></i><br></span>
+                        <span><b>System ID</b> <i class="float-end" id="systemReportID"></i><br></span>
+                        <span><b>Criminality</b><i class="float-end" id="systemReportCriminality"></i><br></span>
+                        <span><b>Player Count<i class="float-end" id="systemReportPlayerCount"></i><br></b>
+                        <span><b>ECP Player Count<i class="float-end" id="systemReportECPPlayerCount"></i><br></b>
+                        <span><b>Player List</b><br></span>
+                        <span id="systemReportPlayerList"></span>
+                        <span id="systemReportTeams"></span>
+                        <div class="btn-group w-100" role="group">
+                            <button class="w-10 btn btn-outline-danger mt-3" id="systemCopyLink" style="min-width: 2.5em"><i class="bi bi-clipboard" id="clipboard"></i></button>
+                            <a class="w-90 btn btn-outline-danger mt-3" id="systemReportLink">Join Game</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="./customGameShare.js"></script>
+    <script src="./script.js"></script>
+    <script src="./themes.js"></script>
+</body>
+
+</html>
